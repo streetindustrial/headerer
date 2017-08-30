@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 
 import sys
-import subprocess as sp
-from random import *
+from random import randint, choice, shuffle
+from subprocess import PIPE
+
+try:
+    from subprocess import run
+except ImportError:
+    from subprocess import Popen as run
 
 __version__ = '0.1'
 
@@ -160,54 +165,69 @@ browsers = (
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko)')
 
 sites = (
-'www.google.com.ph', 'www.google.cv', 'www.google.tg', 'www.google.iq',
-'www.google.co.in', 'www.google.me', 'www.google.com', 'www.google.com.tr',
-'www.google.gr', 'www.google.sh', 'www.google.as', 'www.google.com.om',
-'www.google.co.id', 'www.google.com.mx', 'www.google.pn', 'www.google.ki',
-'www.google.com.jm', 'www.google.com.ni', 'www.google.ml', 'www.google.ba',
-'www.google.com.ng', 'www.google.md', 'www.google.com.pa', 'www.google.co.th',
-'www.google.mg', 'www.google.hn', 'www.google.dz', 'www.google.ch',
-'www.google.gp', 'www.google.co.ck', 'www.google.co.ve', 'www.google.ad',
-'www.google.fi', 'www.google.ms', 'www.google.com.cu', 'www.google.com.sa',
-'www.google.li', 'www.google.pt', 'www.google.co.za', 'www.google.nr',
-'www.google.co.ls', 'www.google.ee', 'www.google.com.kh', 'www.google.cg',
-'www.google.cn', 'www.google.ca', 'www.google.com.ec', 'www.google.co.il',
-'www.google.com.sb', 'www.google.se', 'www.google.sk', 'www.google.tm',
-'www.google.com.vn', 'www.google.com.lb', 'www.google.nu', 'www.google.tl',
-'www.google.ge', 'www.google.by', 'www.google.cf', 'www.google.mu',
-'www.google.com.af', 'www.google.pl', 'www.google.sn', 'www.google.co.jp',
-'www.google.sc', 'www.google.com.co', 'www.google.com.et', 'www.google.co.ma',
-'www.google.com.uy', 'www.google.fr', 'www.google.es', 'www.google.com.mt',
-'www.google.cat', 'www.google.mn', 'www.google.lu', 'www.google.vg',
-'www.google.com.pe', 'www.google.is', 'www.google.co.ke', 'www.google.no',
-'www.google.com.py', 'www.google.com.sl', 'www.google.vu', 'www.google.co.cr',
-'www.google.gl', 'www.google.ht', 'www.google.jo', 'www.google.td',
-'www.google.mk', 'www.google.com.tw', 'www.google.com.cy', 'www.google.so',
-'www.google.be', 'www.google.kz', 'www.google.com.ua', 'www.google.com.nf',
-'www.google.mw', 'www.google.com.pk', 'www.google.co.tz', 'www.google.co.ug',
-'www.google.fm', 'www.google.com.ai', 'www.google.it', 'www.google.dk',
-'www.google.ps', 'www.google.com.qa', 'www.google.bg', 'www.google.lk',
-'www.google.rs', 'www.google.gm', 'www.google.xxx', 'www.google.de',
-'www.google.lt', 'www.google.com.do', 'www.google.tt', 'www.google.si',
-'www.google.com.ag', 'www.google.com.np', 'www.google.ru', 'www.google.bf',
-'www.google.com.gt', 'www.google.im', 'www.google.com.ar', 'www.google.rw',
-'www.google.ro', 'www.google.co.zm', 'www.google.com.hk', 'www.google.com.kw',
-'www.google.ci', 'www.google.com.pr', 'www.google.com.sg', 'www.google.com.gi',
-'www.google.cl', 'www.google.com.ly', 'www.google.tn', 'www.google.co.zw',
-'www.google.mv', 'www.google.co.bw', 'www.google.kg', 'www.google.co.kr',
-'www.google.co.vi', 'www.google.st', 'www.google.bi', 'www.google.com.na',
-'www.google.com.fj', 'www.google.dm', 'www.google.ie', 'www.google.com.bn',
-'www.google.tk', 'www.google.com.tj', 'www.google.sm', 'www.google.gy',
-'www.google.to', 'www.google.com.br', 'www.google.com.eg', 'www.google.am',
-'www.google.ga', 'www.google.az', 'www.google.hr', 'www.google.hu',
-'www.google.co.nz', 'www.google.at', 'www.google.co.uz', 'www.google.nl',
-'www.google.ae', 'www.google.com.bz', 'www.google.lv', 'www.google.co.uk',
-'www.google.gg', 'www.google.com.sv', 'www.google.com.bh', 'www.google.dj',
-'www.google.com.vc', 'www.google.com.gh', 'www.google.je', 'www.google.com.bd',
-'www.google.cz', 'www.google.com.my', 'www.google.co.ao', 'www.google.bj',
-'www.google.la', 'www.google.co.mz', 'www.google.ws', 'www.google.cm',
-'www.google.bs', 'www.google.cd', 'www.google.com.bo', 'www.google.ne',
-'www.google.com.au')
+    'http://www.google.com.ph', 'http://www.google.cv', 'http://www.google.tg',
+    'http://www.google.iq', 'http://www.google.co.in', 'http://www.google.me',
+    'http://www.google.com.tr', 'http://www.google.gr', 'http://www.google.sh',
+    'http://www.google.as', 'http://www.google.com', 'http://www.google.com.om',
+    'http://www.google.co.id', 'http://www.google.com.mx', 'http://www.google.pn',
+    'http://www.google.ki', 'http://www.google.com.jm', 'http://www.google.com.ni',
+    'http://www.google.ml', 'http://www.google.ba', 'http://www.google.com.ng',
+    'http://www.google.md', 'http://www.google.com.pa', 'http://www.google.co.th',
+    'http://www.google.mg', 'http://www.google.hn', 'http://www.google.dz',
+    'http://www.google.ch', 'http://www.google.gp', 'http://www.google.co.ck',
+    'http://www.google.co.ve', 'http://www.google.ad', 'http://www.google.fi',
+    'http://www.google.ms', 'http://www.google.com.cu', 'http://www.google.com.sa',
+    'http://www.google.li', 'http://www.google.pt', 'http://www.google.co.za',
+    'http://www.google.nr', 'http://www.google.co.ls', 'http://www.google.ee',
+    'http://www.google.com.kh', 'http://www.google.cg', 'http://www.google.cn',
+    'http://www.google.ca', 'http://www.google.com.ec', 'http://www.google.co.il',
+    'http://www.google.com.sb', 'http://www.google.se', 'http://www.google.sk',
+    'http://www.google.tm', 'http://www.google.com.vn', 'http://www.google.com.lb',
+    'http://www.google.nu', 'http://www.google.tl', 'http://www.google.ge',
+    'http://www.google.by', 'http://www.google.cf', 'http://www.google.mu',
+    'http://www.google.com.af', 'http://www.google.pl', 'http://www.google.sn',
+    'http://www.google.co.jp', 'http://www.google.sc', 'http://www.google.com.co',
+    'http://www.google.com.et', 'http://www.google.co.ma', 'http://www.google.com.uy',
+    'http://www.google.fr', 'http://www.google.es', 'http://www.google.com.mt',
+    'http://www.google.cat', 'http://www.google.mn', 'http://www.google.lu',
+    'http://www.google.vg', 'http://www.google.com.pe', 'http://www.google.is',
+    'http://www.google.co.ke', 'http://www.google.no', 'http://www.google.com.py',
+    'http://www.google.com.sl', 'http://www.google.vu', 'http://www.google.co.cr',
+    'http://www.google.gl', 'http://www.google.ht', 'http://www.google.jo',
+    'http://www.google.td', 'http://www.google.mk', 'http://www.google.com.tw',
+    'http://www.google.com.cy', 'http://www.google.so', 'http://www.google.be',
+    'http://www.google.kz', 'http://www.google.com.ua', 'http://www.google.com.nf',
+    'http://www.google.mw', 'http://www.google.com.pk', 'http://www.google.co.tz',
+    'http://www.google.co.ug', 'http://www.google.fm', 'http://www.google.com.ai',
+    'http://www.google.it', 'http://www.google.dk', 'http://www.google.rw',
+    'http://www.google.ps', 'http://www.google.com.qa', 'http://www.google.bg',
+    'http://www.google.lk', 'http://www.google.rs', 'http://www.google.gm',
+    'http://www.google.xxx', 'http://www.google.de', 'http://www.google.im',
+    'http://www.google.lt', 'http://www.google.com.do', 'http://www.google.tt',
+    'http://www.google.si', 'http://www.google.com.ag', 'http://www.google.com.np',
+    'http://www.google.ru', 'http://www.google.bf', 'http://www.google.com.gt',
+    'http://www.google.com.ar', 'http://www.google.ro', 'http://www.google.co.zm',
+    'http://www.google.com.hk', 'http://www.google.com.kw', 'http://www.google.ci',
+    'http://www.google.com.sg', 'http://www.google.com.gi', 'http://www.google.co.kr',
+    'http://www.google.cl', 'http://www.google.com.ly', 'http://www.google.tn',
+    'http://www.google.co.zw', 'http://www.google.com.pr', 'http://www.google.com.na',
+    'http://www.google.mv', 'http://www.google.co.bw', 'http://www.google.kg',
+    'http://www.google.co.vi', 'http://www.google.st', 'http://www.google.bi',
+    'http://www.google.com.fj', 'http://www.google.dm', 'http://www.google.ie',
+    'http://www.google.com.bn', 'http://www.google.tk', 'http://www.google.com.tj',
+    'http://www.google.sm', 'http://www.google.gy', 'http://www.google.cm',
+    'http://www.google.to', 'http://www.google.com.br', 'http://www.google.nl',
+    'http://www.google.com.eg', 'http://www.google.am', 'http://www.google.com.vc',
+    'http://www.google.ga', 'http://www.google.az', 'http://www.google.hr',
+    'http://www.google.hu', 'http://www.google.co.nz', 'http://www.google.at',
+    'http://www.google.ae', 'http://www.google.com.bz', 'http://www.google.lv',
+    'http://www.google.co.uk', 'http://www.google.gg', 'http://www.google.com.sv',
+    'http://www.google.com.bh', 'http://www.google.dj', 'http://www.google.com.gh',
+    'http://www.google.je', 'http://www.google.com.bd', 'http://www.google.cz',
+    'http://www.google.co.ao', 'http://www.google.bj', 'http://www.google.com.my',
+    'http://www.google.la', 'http://www.google.co.mz', 'http://www.google.ws',
+    'http://www.google.bs', 'http://www.google.cd', 'http://www.google.com.bo',
+    'http://www.google.ne', 'http://www.google.com.au', 'http://www.google.co.uz')
 
 
 class Generator:
@@ -228,15 +248,19 @@ class Generator:
 
     Options:
 
-    - hosts=<host1>,<host2>, ... - list of hosts for which unique headers must
-      be generated
+    - hosts=<host1>,<host2>, ... - list of hosts for each of that unique
+      headers will be created (default is .*)
     - ip_0=<ip> - start ip (for Client-Ip and proxy headers)
     - ip_1=<ip> - end ip
-
+    - encodings=<encoding1>,<encoding2>... - list of encodings (gzip, ...)
+      will be shuffled
+    - languages=<lang1>,<lang2>... - languages to use (en-US, ...)
     """
 
-    ip_command = [
-        'dig', 'TXT', '+short', 'o-o.myaddr.l.google.com', '@ns1.google.com']
+    ip_command = ('dig', 'TXT', '+short', 'o-o.myaddr.l.google.com',
+                  '@ns1.google.com')
+    encodings = ['gzip', 'deflate', 'br', 'compress']
+    languages = ['en-US', 'en']
 
     def __call__(self, args=sys.argv[1:]):
         if '--help' in args or '-h' in args:
@@ -244,24 +268,43 @@ class Generator:
         else:
             args, kws = self._parse_args(args)
             for arg in args: print(arg)
-            hosts = kws.get('hosts', '.*').split(',')
+            hosts = kws.get('hosts', ['.*'])
             for host in hosts:
                 print(host)
                 self._print(self._gen(**kws))
 
     def _gen(self, **kws):
 
-        def get_real_ip(**_) -> str:
-            p = sp.run(self.ip_command, stdout=sp.PIPE, stderr=sp.PIPE)
-            return p.stdout.decode('utf-8').strip('\n').strip('"')
+        def _gen_random_list(data):
+            shuffle(data)
+            s = choice((',', ', '))
+            return s.join(data)
 
-        def set_user_agent(**_) -> str:
+        def get_real_ip(**_):
+            p = run(self.ip_command, stdout=PIPE, stderr=PIPE)
+            try:  # python 2.7/3 compatibility
+                txt = p.stdout.read()
+            except AttributeError:
+                txt = p.stdout
+            return txt.decode('utf-8').strip('\n').strip('"')
+
+        def set_user_agent(**_):
             return choice(browsers)
 
-        def set_up_ref(**_) -> str:
+        def set_up_ref(**_):
             return 'https://%s/' % choice(sites)
 
-        def set_ip(ip_0='0.0.0.0', ip_1='255.255.255.255', **_) -> str:
+        def set_up_encodings(encodings=None, **_):
+            if not encodings:
+                encodings = self.encodings
+            return _gen_random_list(encodings)
+
+        def set_up_language(languages=None, **_):
+            if not languages:
+                languages = self.languages
+            return _gen_random_list(languages)
+
+        def set_ip(ip_0='0.0.0.0', ip_1='255.255.255.255', **_):
             ip0, ip1 = map(int, ip_0.split('.')), map(int, ip_1.split('.'))
             ip = (str(randint(*sorted([i0, i1]))) for i0, i1 in zip(ip0, ip1))
             return '.'.join(ip)
@@ -271,23 +314,30 @@ class Generator:
             'Client-Ip': set_ip(**kws),
             'Via': set_ip(**kws),
             'X-Forwarded-For': get_real_ip(**kws),
-            'Referer': set_up_ref(**kws)
+            'Referer': set_up_ref(**kws),
+            'Accept-Encoding': set_up_encodings(**kws),
+            'Accept-Language': set_up_language(**kws)
         }
 
         for k, v in kws.items():
+            if isinstance(v, (list, tuple)):
+                v = ','.join(v)
             if k in headers:
                 headers[k] = v
 
         return headers
 
     @staticmethod
-    def _parse_args(args) -> (list, dict):
+    def _parse_args(args):
         _args = [arg for arg in args if '=' not in arg]
         kws = dict((arg.split('=') for arg in args if '=' in arg))
+        for key, value in kws.items():
+            if ',' in value:
+                kws[key] = [v.strip(' ') for v in value.split(',')]
         return _args, kws
 
     @staticmethod
-    def _print(headers: dict):
+    def _print(headers):
         for k, v in headers.items():
             print('%s=%s' % (k, v))
 
