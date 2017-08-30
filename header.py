@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 import sys
 from random import randint, choice, shuffle
@@ -165,69 +165,69 @@ browsers = (
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko)')
 
 sites = (
-    'http://www.google.com.ph', 'http://www.google.cv', 'http://www.google.tg',
-    'http://www.google.iq', 'http://www.google.co.in', 'http://www.google.me',
-    'http://www.google.com.tr', 'http://www.google.gr', 'http://www.google.sh',
-    'http://www.google.as', 'http://www.google.com', 'http://www.google.com.om',
-    'http://www.google.co.id', 'http://www.google.com.mx', 'http://www.google.pn',
-    'http://www.google.ki', 'http://www.google.com.jm', 'http://www.google.com.ni',
-    'http://www.google.ml', 'http://www.google.ba', 'http://www.google.com.ng',
-    'http://www.google.md', 'http://www.google.com.pa', 'http://www.google.co.th',
-    'http://www.google.mg', 'http://www.google.hn', 'http://www.google.dz',
-    'http://www.google.ch', 'http://www.google.gp', 'http://www.google.co.ck',
-    'http://www.google.co.ve', 'http://www.google.ad', 'http://www.google.fi',
-    'http://www.google.ms', 'http://www.google.com.cu', 'http://www.google.com.sa',
-    'http://www.google.li', 'http://www.google.pt', 'http://www.google.co.za',
-    'http://www.google.nr', 'http://www.google.co.ls', 'http://www.google.ee',
-    'http://www.google.com.kh', 'http://www.google.cg', 'http://www.google.cn',
-    'http://www.google.ca', 'http://www.google.com.ec', 'http://www.google.co.il',
-    'http://www.google.com.sb', 'http://www.google.se', 'http://www.google.sk',
-    'http://www.google.tm', 'http://www.google.com.vn', 'http://www.google.com.lb',
-    'http://www.google.nu', 'http://www.google.tl', 'http://www.google.ge',
-    'http://www.google.by', 'http://www.google.cf', 'http://www.google.mu',
-    'http://www.google.com.af', 'http://www.google.pl', 'http://www.google.sn',
-    'http://www.google.co.jp', 'http://www.google.sc', 'http://www.google.com.co',
-    'http://www.google.com.et', 'http://www.google.co.ma', 'http://www.google.com.uy',
-    'http://www.google.fr', 'http://www.google.es', 'http://www.google.com.mt',
-    'http://www.google.cat', 'http://www.google.mn', 'http://www.google.lu',
-    'http://www.google.vg', 'http://www.google.com.pe', 'http://www.google.is',
-    'http://www.google.co.ke', 'http://www.google.no', 'http://www.google.com.py',
-    'http://www.google.com.sl', 'http://www.google.vu', 'http://www.google.co.cr',
-    'http://www.google.gl', 'http://www.google.ht', 'http://www.google.jo',
-    'http://www.google.td', 'http://www.google.mk', 'http://www.google.com.tw',
-    'http://www.google.com.cy', 'http://www.google.so', 'http://www.google.be',
-    'http://www.google.kz', 'http://www.google.com.ua', 'http://www.google.com.nf',
-    'http://www.google.mw', 'http://www.google.com.pk', 'http://www.google.co.tz',
-    'http://www.google.co.ug', 'http://www.google.fm', 'http://www.google.com.ai',
-    'http://www.google.it', 'http://www.google.dk', 'http://www.google.rw',
-    'http://www.google.ps', 'http://www.google.com.qa', 'http://www.google.bg',
-    'http://www.google.lk', 'http://www.google.rs', 'http://www.google.gm',
-    'http://www.google.xxx', 'http://www.google.de', 'http://www.google.im',
-    'http://www.google.lt', 'http://www.google.com.do', 'http://www.google.tt',
-    'http://www.google.si', 'http://www.google.com.ag', 'http://www.google.com.np',
-    'http://www.google.ru', 'http://www.google.bf', 'http://www.google.com.gt',
-    'http://www.google.com.ar', 'http://www.google.ro', 'http://www.google.co.zm',
-    'http://www.google.com.hk', 'http://www.google.com.kw', 'http://www.google.ci',
-    'http://www.google.com.sg', 'http://www.google.com.gi', 'http://www.google.co.kr',
-    'http://www.google.cl', 'http://www.google.com.ly', 'http://www.google.tn',
-    'http://www.google.co.zw', 'http://www.google.com.pr', 'http://www.google.com.na',
-    'http://www.google.mv', 'http://www.google.co.bw', 'http://www.google.kg',
-    'http://www.google.co.vi', 'http://www.google.st', 'http://www.google.bi',
-    'http://www.google.com.fj', 'http://www.google.dm', 'http://www.google.ie',
-    'http://www.google.com.bn', 'http://www.google.tk', 'http://www.google.com.tj',
-    'http://www.google.sm', 'http://www.google.gy', 'http://www.google.cm',
-    'http://www.google.to', 'http://www.google.com.br', 'http://www.google.nl',
-    'http://www.google.com.eg', 'http://www.google.am', 'http://www.google.com.vc',
-    'http://www.google.ga', 'http://www.google.az', 'http://www.google.hr',
-    'http://www.google.hu', 'http://www.google.co.nz', 'http://www.google.at',
-    'http://www.google.ae', 'http://www.google.com.bz', 'http://www.google.lv',
-    'http://www.google.co.uk', 'http://www.google.gg', 'http://www.google.com.sv',
-    'http://www.google.com.bh', 'http://www.google.dj', 'http://www.google.com.gh',
-    'http://www.google.je', 'http://www.google.com.bd', 'http://www.google.cz',
-    'http://www.google.co.ao', 'http://www.google.bj', 'http://www.google.com.my',
-    'http://www.google.la', 'http://www.google.co.mz', 'http://www.google.ws',
-    'http://www.google.bs', 'http://www.google.cd', 'http://www.google.com.bo',
-    'http://www.google.ne', 'http://www.google.com.au', 'http://www.google.co.uz')
+    'https://www.google.com.ph', 'https://www.google.cv', 'https://www.google.tg',
+    'https://www.google.iq', 'https://www.google.co.in', 'https://www.google.me',
+    'https://www.google.com.tr', 'https://www.google.gr', 'https://www.google.sh',
+    'https://www.google.as', 'https://www.google.com', 'https://www.google.com.om',
+    'https://www.google.co.id', 'https://www.google.com.mx', 'https://www.google.pn',
+    'https://www.google.ki', 'https://www.google.com.jm', 'https://www.google.com.ni',
+    'https://www.google.ml', 'https://www.google.ba', 'https://www.google.com.ng',
+    'https://www.google.md', 'https://www.google.com.pa', 'https://www.google.co.th',
+    'https://www.google.mg', 'https://www.google.hn', 'https://www.google.dz',
+    'https://www.google.ch', 'https://www.google.gp', 'https://www.google.co.ck',
+    'https://www.google.co.ve', 'https://www.google.ad', 'https://www.google.fi',
+    'https://www.google.ms', 'https://www.google.com.cu', 'https://www.google.com.sa',
+    'https://www.google.li', 'https://www.google.pt', 'https://www.google.co.za',
+    'https://www.google.nr', 'https://www.google.co.ls', 'https://www.google.ee',
+    'https://www.google.com.kh', 'https://www.google.cg', 'https://www.google.cn',
+    'https://www.google.ca', 'https://www.google.com.ec', 'https://www.google.co.il',
+    'https://www.google.com.sb', 'https://www.google.se', 'https://www.google.sk',
+    'https://www.google.tm', 'https://www.google.com.vn', 'https://www.google.com.lb',
+    'https://www.google.nu', 'https://www.google.tl', 'https://www.google.ge',
+    'https://www.google.by', 'https://www.google.cf', 'https://www.google.mu',
+    'https://www.google.com.af', 'https://www.google.pl', 'https://www.google.sn',
+    'https://www.google.co.jp', 'https://www.google.sc', 'https://www.google.com.co',
+    'https://www.google.com.et', 'https://www.google.co.ma', 'https://www.google.com.uy',
+    'https://www.google.fr', 'https://www.google.es', 'https://www.google.com.mt',
+    'https://www.google.cat', 'https://www.google.mn', 'https://www.google.lu',
+    'https://www.google.vg', 'https://www.google.com.pe', 'https://www.google.is',
+    'https://www.google.co.ke', 'https://www.google.no', 'https://www.google.com.py',
+    'https://www.google.com.sl', 'https://www.google.vu', 'https://www.google.co.cr',
+    'https://www.google.gl', 'https://www.google.ht', 'https://www.google.jo',
+    'https://www.google.td', 'https://www.google.mk', 'https://www.google.com.tw',
+    'https://www.google.com.cy', 'https://www.google.so', 'https://www.google.be',
+    'https://www.google.kz', 'https://www.google.com.ua', 'https://www.google.com.nf',
+    'https://www.google.mw', 'https://www.google.com.pk', 'https://www.google.co.tz',
+    'https://www.google.co.ug', 'https://www.google.fm', 'https://www.google.com.ai',
+    'https://www.google.it', 'https://www.google.dk', 'https://www.google.rw',
+    'https://www.google.ps', 'https://www.google.com.qa', 'https://www.google.bg',
+    'https://www.google.lk', 'https://www.google.rs', 'https://www.google.gm',
+    'https://www.google.xxx', 'https://www.google.de', 'https://www.google.im',
+    'https://www.google.lt', 'https://www.google.com.do', 'https://www.google.tt',
+    'https://www.google.si', 'https://www.google.com.ag', 'https://www.google.com.np',
+    'https://www.google.ru', 'https://www.google.bf', 'https://www.google.com.gt',
+    'https://www.google.com.ar', 'https://www.google.ro', 'https://www.google.co.zm',
+    'https://www.google.com.hk', 'https://www.google.com.kw', 'https://www.google.ci',
+    'https://www.google.com.sg', 'https://www.google.com.gi', 'https://www.google.co.kr',
+    'https://www.google.cl', 'https://www.google.com.ly', 'https://www.google.tn',
+    'https://www.google.co.zw', 'https://www.google.com.pr', 'https://www.google.com.na',
+    'https://www.google.mv', 'https://www.google.co.bw', 'https://www.google.kg',
+    'https://www.google.co.vi', 'https://www.google.st', 'https://www.google.bi',
+    'https://www.google.com.fj', 'https://www.google.dm', 'https://www.google.ie',
+    'https://www.google.com.bn', 'https://www.google.tk', 'https://www.google.com.tj',
+    'https://www.google.sm', 'https://www.google.gy', 'https://www.google.cm',
+    'https://www.google.to', 'https://www.google.com.br', 'https://www.google.nl',
+    'https://www.google.com.eg', 'https://www.google.am', 'https://www.google.com.vc',
+    'https://www.google.ga', 'https://www.google.az', 'https://www.google.hr',
+    'https://www.google.hu', 'https://www.google.co.nz', 'https://www.google.at',
+    'https://www.google.ae', 'https://www.google.com.bz', 'https://www.google.lv',
+    'https://www.google.co.uk', 'https://www.google.gg', 'https://www.google.com.sv',
+    'https://www.google.com.bh', 'https://www.google.dj', 'https://www.google.com.gh',
+    'https://www.google.je', 'https://www.google.com.bd', 'https://www.google.cz',
+    'https://www.google.co.ao', 'https://www.google.bj', 'https://www.google.com.my',
+    'https://www.google.la', 'https://www.google.co.mz', 'https://www.google.ws',
+    'https://www.google.bs', 'https://www.google.cd', 'https://www.google.com.bo',
+    'https://www.google.ne', 'https://www.google.com.au', 'https://www.google.co.uz')
 
 
 class Generator:
@@ -250,8 +250,8 @@ class Generator:
 
     - hosts=<host1>,<host2>, ... - list of hosts for each of that unique
       headers will be created (default is .*)
-    - ip_0=<ip> - start ip (for Client-Ip and proxy headers)
-    - ip_1=<ip> - end ip
+    - ip_0=<ip> - start ip for Client-Ip and proxy headers (default is 1.0.0.0)
+    - ip_1=<ip> - end ip (default is 255.255.255.255)
     - encodings=<encoding1>,<encoding2>... - list of encodings (gzip, ...)
       will be shuffled
     - languages=<lang1>,<lang2>... - languages to use (en-US, ...)
@@ -292,19 +292,17 @@ class Generator:
             return choice(browsers)
 
         def set_up_ref(**_):
-            return 'https://%s/' % choice(sites)
+            return choice(sites)
 
         def set_up_encodings(encodings=None, **_):
-            if not encodings:
-                encodings = self.encodings
+            if not encodings: encodings = self.encodings
             return _gen_random_list(encodings)
 
         def set_up_language(languages=None, **_):
-            if not languages:
-                languages = self.languages
+            if not languages: languages = self.languages
             return _gen_random_list(languages)
 
-        def set_ip(ip_0='0.0.0.0', ip_1='255.255.255.255', **_):
+        def set_ip(ip_0='1.0.0.0', ip_1='255.255.255.255', **_):
             ip0, ip1 = map(int, ip_0.split('.')), map(int, ip_1.split('.'))
             ip = (str(randint(*sorted([i0, i1]))) for i0, i1 in zip(ip0, ip1))
             return '.'.join(ip)
