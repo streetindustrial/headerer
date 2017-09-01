@@ -260,7 +260,6 @@ class Generator:
     ip_command = ('dig', 'TXT', '+short', 'o-o.myaddr.l.google.com',
                   '@ns1.google.com')
     encodings = ['gzip', 'deflate', 'br', 'compress']
-    languages = ['en-US', 'en']
 
     def __call__(self, args=sys.argv[1:]):
         if '--help' in args or '-h' in args:
@@ -298,10 +297,6 @@ class Generator:
             if not encodings: encodings = self.encodings
             return _gen_random_list(encodings)
 
-        def set_up_language(languages=None, **_):
-            if not languages: languages = self.languages
-            return _gen_random_list(languages)
-
         def set_ip(ip_0='1.0.0.0', ip_1='255.255.255.255', **_):
             ip0, ip1 = map(int, ip_0.split('.')), map(int, ip_1.split('.'))
             ip = (str(randint(*sorted([i0, i1]))) for i0, i1 in zip(ip0, ip1))
@@ -313,14 +308,15 @@ class Generator:
             'Via': set_ip(**kws),
             'X-Forwarded-For': get_real_ip(**kws),
             'Referer': set_up_ref(**kws),
-            'Accept-Encoding': set_up_encodings(**kws),
-            'Accept-Language': set_up_language(**kws)
+            'Accept-Encoding': set_up_encodings(**kws)
         }
+
+        args = {'ip_0', 'ip_1', 'encodings'}
 
         for k, v in kws.items():
             if isinstance(v, (list, tuple)):
                 v = ','.join(v)
-            if k in headers:
+            if k not in args:
                 headers[k] = v
 
         return headers
