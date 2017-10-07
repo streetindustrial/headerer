@@ -43,7 +43,7 @@ Usage (terminal)
 
         header hosts=".*,abc.d"
 
-    Result example:
+    Result example::
 
         .*
         User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64; rv:44.0) Gecko/20100101
@@ -75,22 +75,22 @@ Setting up a cron job in Linux
 Signature
 =========
 
-    -----BEGIN PGP MESSAGE-----
-    Comment: https://keybase.io/download
-    Version: Keybase Go 1.0.33 (darwin)
+-----BEGIN PGP MESSAGE-----
+Comment: https://keybase.io/download
+Version: Keybase Go 1.0.33 (darwin)
 
-    xA0DAAoBBlwjHugln6QBy+F0AOIAAAAA43JlYWRtZS5y4XN0AMLBXAQAAQoAEAUC
-    WdkLXQkQBlwjHugln6QAAC5oEAB5aRvfYW+A5K34FFsxToAwlCy4L7WSCr+gXKhi
-    7HNYX9It8/CwDF9GMkmPL2Kk3ODQa09syh0t8dDdtcT2xXh5xaI40P11pQTCMDT1
-    EjwSra0s8CGrB0c6DxynlcOQKwytjJtlZr7luNxdIwmscW6ZYxCze+IFXJwxiZEq
-    v3sbuzN3e4dmv5da+ydS876TKGucpHRGQE+5TPLKsDxd4O1+o36KPk6LO55Ac18l
-    5qTDXN6PpRrKQQm0WYUvqpPJ2SujZdc1RjNJmFNAHoJrYPFOMNpUpXDg0hm/F3JZ
-    waYaWTU409I+1HiN6R1xVhf+tsb3pl3yYpM8xhajq4+WjUjPfGidFlqZGDS42JJm
-    Y0/wpq9+WWOOhFEtidsjibTeKzg8QgGEWYGxOpbiH85c0RAYy/OTA8+F1px5Gjif
-    L0hAZsmUyNCz1yOc/UB+5SfrzSZUslrUbOvYrCcV9vkZXiE5fb93vQPZDQfd9ntO
-    vjcQqL22gZNW2NwjkIsxssu+u5eWuBF0ZE2rapjBQXYerHn+RnuHtk8XHfzcmqMT
-    RJ5na0JJPkdaU1SImxDWc92W0SO1yr6RAk91d9MdwK4v0eFB5DZk/yI84zqdg0iv
-    5lckihFtY14uoC6OQ45WlX7RAbyKR8yDLOopQLo+tGob4wiC1iLpTDb3PA73+3J9
-    40r2vg==
-    =L7F7
-    -----END PGP MESSAGE-----
+xA0DAAoBBlwjHugln6QBy+F0AOIAAAAA5EhUVFAgaGVhZGVyIGdlbmXjcmF0b3Ig
+YnniIFYuUuAuAMLBXAQAAQoAEAUCWdkO1wkQBlwjHugln6QAAJqpEAAN7Ob4NBzD
+VDZiXRe6rEl5F/Gqj8MexgMLmaPzoZH1mYKOjkP6yqk9St2ex4mWihu5vUrCSRD7
+3THq9x5hlZsxLtlyCyCKBnfjQSnrds8B8kSLHifJ0ZZ1yv2lSjjlEZ+v/vOFYjMj
+2YMoDqeLOAA3HoLsVzyhXMXjZ0W0DWBAvjY/ydT1VnTSX1dTI2f2bCcyW/NekSH1
+3FzGIlR13PopYoFPCU7gD500WSTxDovrvV0vanNI7f8LdstzLMZLYX81WBaB/zHh
+T/gfcTRaVs1g0hAliOL9+Pn4rxLrN92zXMxzpJMtCEjXvnntSr57r1btALN1WqFk
+hg1FI62h1E+88mW7EuSxO924nJWsQYSk4ZDIbFiA1F3OmxJgxR1O/8MKutupMiWC
+xBz4XhyjyxWLZF+iKSQllxNEZ73pSc/4vd5NINxrWzVG/pAUQSagnLtETNve3b6O
+BdAGrA3+yj/KiXYAZZnD+IAQXrxtWrbACVDD4qmZy3wDNqQh3klklg+d+91heziZ
+sJw8NVkriIUO3c0X6lIAAdk40matYb7s7HE7gI6NWJ804YfiAJqO1F4J8ijsYhyX
+xrK8ndW+1qdEDtUQulDaGlNGZvrICCHne9wTk7DA2EVIyVCv8k3dxdq2RQ7GM6hh
+3lWiueXXRh6vnJT+2x3Y/JRKuH9dX7xPNg==
+=/k9R
+-----END PGP MESSAGE-----
