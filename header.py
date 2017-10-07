@@ -1,15 +1,154 @@
 #!/usr/bin/env python
 
-import sys
-from random import randint, choice, shuffle
+"""
+Header-mod
+
+OS: Linux, Mac OS
+Python: 2.7+, 3.0+
+Requirements: None
+Version: 0.1.1
+Author: Violet Red `https://violent.red`_
+GPG:
+
+Description:
+
+    Currently this tool can generate random IP (fake proxy) headers and set up
+    random "Referer" and "User-Agent" as well.
+
+    Currently "User-Agent" contains about 100 popular browser headers. If you'd
+    like to extend it, you may contact me, because I have a larger data set as
+    well.
+
+Usage (terminal):
+
+    You may want to set the file to be executable (for convenience):
+
+        mv header.py header
+        chmod u+x header
+
+    Then use it just like any UNIX program:
+
+        header
+
+    To save this into a file:
+
+        header > yourfile.txt
+
+    Generate IP within range:
+
+        header ip_0=1.1.1.1 ip_1=5.5.5.5
+
+    Set some headers (or override random ones):
+
+        header Referer=http://your.site
+
+    Generate headers for multiple hosts:
+
+        header hosts=.*,abc.d
+
+    Result example:
+
+        .*
+        User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64; rv:44.0) Gecko/20100101
+        Client-Ip=109.119.22.182
+        Via=251.28.117.165
+        X-Forwarded-For=65.43.11.120
+        Referer=https://www.google.com.bh
+
+Setting up a cron job (Mac OS):
+
+    `com.http.header.maker.plist` contains a simple cron job for Mac OS system.
+
+    Copy this file into the ... (I forgot where it's stored)
+
+Setting up a cron job (Linux):
+
+    in progress ...
+
+"""
+
+from random import randint, choice
 from subprocess import PIPE
 
-try:
+try:    # python 2.7 compatibility
     from subprocess import run
 except ImportError:
     from subprocess import Popen as run
 
-__version__ = '0.1'
+__version__ = '0.1.1'
+
+
+class Generator:
+    """HTTP browser headers generator."""
+
+    # TODO: Windows support for this command + or consider a better method (?)
+
+    ip_dig = ('dig', 'TXT', '+short', 'o-o.myaddr.l.google.com',
+              '@ns1.google.com')  #: used to get a client's ip
+
+    def __call__(self, *argv):
+        """To use within a Terminal/Console (prints to stdout)."""
+
+        if '--help' in argv or '-h' in argv:
+            print(__name__.__doc__)
+        else:
+            args = dict(i.split('=') for i in argv)
+            hosts = args.pop('hosts', '.*').strip('"').split(',')
+
+            for host, data in self.gen(hosts, **args):
+                print(host)
+                for k, v in data.items():
+                    print('%s=%s' % (k, v))
+
+    def gen(self, hosts, ip_0='1.0.0.0', ip_1='255.255.255.255', **headers):
+        """
+        To use within python.
+
+        :param hosts: list of hostnames or patterns
+        :type hosts: Tuple[str, ...]
+        :param ip_0: random range start ip
+        :type ip_0: str
+        :param ip_1: random range end ip
+        :type ip_1: str
+        :param headers: dict of explicitly set headers
+        :type headers: Dict[str, str]
+        :return: host, headers pair for each host
+        :rtype: Generator[Tuple[str, Dict[str, str]], None, None]
+        """
+
+        def get_real_ip():
+            """Returns a client real IP. Currently uses `dig` command."""
+
+            p = run(self.ip_dig, stdout=PIPE, stderr=PIPE)
+            try:  # python 2.7/3 compatibility
+                txt = p.stdout.read()
+            except AttributeError:
+                txt = p.stdout
+            return txt.decode('utf-8').strip('\n').strip('"')
+
+        def get_ip(ip_0, ip_1):
+            """Auto-generates an IP address within a given range."""
+
+            ip0, ip1 = map(int, ip_0.split('.')), map(int, ip_1.split('.'))
+            ip = (str(randint(*sorted([i0, i1]))) for i0, i1 in zip(ip0, ip1))
+            return '.'.join(ip)
+
+        for host in hosts:
+
+            generated = {
+                'User-Agent': choice(browsers),
+                'Client-Ip': get_ip(ip_0, ip_1),
+                'Via': get_ip(ip_0, ip_1),
+                'X-Forwarded-For': get_real_ip(),
+                'Referer': choice(sites)
+            }
+
+            generated.update(headers)
+
+            yield host, generated
+
+
+# List of most popular "User-Agent" headers (2017):
 
 browsers = (
     'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36',
@@ -164,6 +303,8 @@ browsers = (
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/601.4.4 (KHTML, like Gecko)',
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko)')
 
+# List of google mirrors used for "Referer" header:
+
 sites = (
     'https://www.google.com.ph', 'https://www.google.cv', 'https://www.google.tg',
     'https://www.google.iq', 'https://www.google.co.in', 'https://www.google.me',
@@ -229,112 +370,6 @@ sites = (
     'https://www.google.bs', 'https://www.google.cd', 'https://www.google.com.bo',
     'https://www.google.ne', 'https://www.google.com.au', 'https://www.google.co.uz')
 
-
-class Generator:
-    """
-    HTTP headers randomizer by Violet.
-
-    Usage (Unix):
-
-      python3 header.py <option>=<value> ... > header_file
-
-    You can override random values with your defaults as well:
-
-      python3 header.py User-Agent="f*ck gv"
-
-    Or use a default template from a file:
-
-      python3 header.py $(cat template_file | xargs)
-
-    Options:
-
-    - hosts=<host1>,<host2>, ... - list of hosts for each of that unique
-      headers will be created (default is .*)
-    - ip_0=<ip> - start ip for Client-Ip and proxy headers (default is 1.0.0.0)
-    - ip_1=<ip> - end ip (default is 255.255.255.255)
-    - encodings=<encoding1>,<encoding2>... - list of encodings (gzip, ...)
-      will be shuffled
-    - languages=<lang1>,<lang2>... - languages to use (en-US, ...)
-    """
-
-    ip_command = ('dig', 'TXT', '+short', 'o-o.myaddr.l.google.com',
-                  '@ns1.google.com')
-    encodings = ['gzip', 'deflate', 'br', 'compress']
-
-    def __call__(self, args=sys.argv[1:]):
-        if '--help' in args or '-h' in args:
-            print(self.__doc__)
-        else:
-            args, kws = self._parse_args(args)
-            for arg in args: print(arg)
-            hosts = kws.get('hosts', ['.*'])
-            for host in hosts:
-                print(host)
-                self._print(self._gen(**kws))
-
-    def _gen(self, **kws):
-
-        def _gen_random_list(data):
-            shuffle(data)
-            s = choice((',', ', '))
-            return s.join(data)
-
-        def get_real_ip(**_):
-            p = run(self.ip_command, stdout=PIPE, stderr=PIPE)
-            try:  # python 2.7/3 compatibility
-                txt = p.stdout.read()
-            except AttributeError:
-                txt = p.stdout
-            return txt.decode('utf-8').strip('\n').strip('"')
-
-        def set_user_agent(**_):
-            return choice(browsers)
-
-        def set_up_ref(**_):
-            return choice(sites)
-
-        def set_up_encodings(encodings=None, **_):
-            if not encodings: encodings = self.encodings
-            return _gen_random_list(encodings)
-
-        def set_ip(ip_0='1.0.0.0', ip_1='255.255.255.255', **_):
-            ip0, ip1 = map(int, ip_0.split('.')), map(int, ip_1.split('.'))
-            ip = (str(randint(*sorted([i0, i1]))) for i0, i1 in zip(ip0, ip1))
-            return '.'.join(ip)
-
-        headers = {
-            'User-Agent': set_user_agent(),
-            'Client-Ip': set_ip(**kws),
-            'Via': set_ip(**kws),
-            'X-Forwarded-For': get_real_ip(**kws),
-            'Referer': set_up_ref(**kws),
-            'Accept-Encoding': set_up_encodings(**kws)
-        }
-
-        args = {'ip_0', 'ip_1', 'encodings'}
-
-        for k, v in kws.items():
-            if isinstance(v, (list, tuple)):
-                v = ','.join(v)
-            if k not in args:
-                headers[k] = v
-
-        return headers
-
-    @staticmethod
-    def _parse_args(args):
-        _args = [arg for arg in args if '=' not in arg]
-        kws = dict((arg.split('=') for arg in args if '=' in arg))
-        for key, value in kws.items():
-            if ',' in value:
-                kws[key] = [v.strip(' ') for v in value.split(',')]
-        return _args, kws
-
-    @staticmethod
-    def _print(headers):
-        for k, v in headers.items():
-            print('%s=%s' % (k, v))
-
-
 if __name__ == '__main__':
-    Generator()()
+    import sys
+    Generator()(*sys.argv[1:])

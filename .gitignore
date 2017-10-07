@@ -2,15 +2,6 @@
 *
 
 !.gitignore
-
-# data files
-
-!browsers
-!sites
-
-# code files
-
 !header.py
-
-# aux files
 !com.http.header.maker.plist
+!readme.rst

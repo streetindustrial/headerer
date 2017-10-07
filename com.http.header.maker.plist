@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 
+<!-- Apple style cron job plist -->
+
 <plist version="1.0">
 <dict>
     <key>Label</key>
     <string>com.http.header.maker</string>
     <key>ProgramArguments</key>
     <array>
+
+        <!-- path to the executable -->
         <string>~/bin/header</string>
+
+        <!-- random IP within this range -->
         <string>ip_0=87.66.00.00</string>
         <string>ip_1=87.66.255.255</string>
-        <string>&gt; ~/head_rules</string>
+
+        <!-- save the output as "headers" file in $HOME directory -->
+        <string>&gt; ~/headers</string>
+
     </array>
     <key>StartCalendarInterval</key>
     <dict>
+
+        <!-- cron job, periodic interval -->
         <key>Minute</key>
         <integer>51</integer>
         <key>Hour</key>
         <integer>04</integer>
+
     </dict>
 </dict>
 </plist>
