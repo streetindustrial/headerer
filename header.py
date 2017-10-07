@@ -1,69 +1,56 @@
 #!/usr/bin/env python
 
 """
-Header-mod
 
-OS: Linux, Mac OS
-Python: 2.7+, 3.0+
-Requirements: None
-Version: 0.1.1
-Author: Violet Red `https://violent.red`_
-GPG:
+NAME
 
-Description:
+    header -- generate a random browser headers to stdout
 
-    Currently this tool can generate random IP (fake proxy) headers and set up
-    random "Referer" and "User-Agent" as well.
+SYNOPSIS
 
-    Currently "User-Agent" contains about 100 popular browser headers. If you'd
-    like to extend it, you may contact me, because I have a larger data set as
-    well.
+    header [ arguments ]
 
-Usage (terminal):
+DESCRIPTION
 
-    You may want to set the file to be executable (for convenience):
+    Generates random IP (fake proxy) headers and sets up random "Referer" and
+    "User-Agent" headers as well.
 
-        mv header.py header
-        chmod u+x header
+    Result example:
 
-    Then use it just like any UNIX program:
+    .*
+    User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64; rv:44.0) Gecko/20100101
+    Client-Ip=109.119.22.182
+    Via=251.28.117.165
+    X-Forwarded-For=65.43.11.120
+    Referer=https://www.google.com.bh
+
+    Available arguments:
+
+    hosts - list of hosts or host patterns ( default = ".*," )
+    ip_0  - start IP address within range ( default = "0.0.0.0" )
+    ip_1  - end IP address within range ( default = "255.255.255.255" )
+
+EXAMPLES
+
+    Basic example:
 
         header
 
-    To save this into a file:
+    UNIX piping is supported:
 
-        header > yourfile.txt
+        header > headers.txt
 
     Generate IP within range:
 
         header ip_0=1.1.1.1 ip_1=5.5.5.5
 
-    Set some headers (or override random ones):
+    Override or set headers (quotes are escaped):
 
-        header Referer=http://your.site
+        header Referer="http://your.site" CIA_DOGS=15
 
-    Generate headers for multiple hosts:
+    Generate headers for multiple hosts (no spaces):
 
-        header hosts=.*,abc.d
-
-    Result example:
-
-        .*
-        User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64; rv:44.0) Gecko/20100101
-        Client-Ip=109.119.22.182
-        Via=251.28.117.165
-        X-Forwarded-For=65.43.11.120
-        Referer=https://www.google.com.bh
-
-Setting up a cron job (Mac OS):
-
-    `com.http.header.maker.plist` contains a simple cron job for Mac OS system.
-
-    Copy this file into the ... (I forgot where it's stored)
-
-Setting up a cron job (Linux):
-
-    in progress ...
+        header hosts=".*,abc.d"
 
 """
 
@@ -75,10 +62,11 @@ try:    # python 2.7 compatibility
 except ImportError:
     from subprocess import Popen as run
 
+__all__ = ['HeaderGen']
 __version__ = '0.1.1'
 
 
-class Generator:
+class HeaderGen:
     """HTTP browser headers generator."""
 
     # TODO: Windows support for this command + or consider a better method (?)
@@ -90,10 +78,10 @@ class Generator:
         """To use within a Terminal/Console (prints to stdout)."""
 
         if '--help' in argv or '-h' in argv:
-            print(__name__.__doc__)
+            print(globals()['__doc__'])
         else:
-            args = dict(i.split('=') for i in argv)
-            hosts = args.pop('hosts', '.*').strip('"').split(',')
+            args = {k: v.strip('"') for k, v in (i.split('=') for i in argv)}
+            hosts = args.pop('hosts', '.*').split(',')
 
             for host, data in self.gen(hosts, **args):
                 print(host)
@@ -372,4 +360,4 @@ sites = (
 
 if __name__ == '__main__':
     import sys
-    Generator()(*sys.argv[1:])
+    HeaderGen()(*sys.argv[1:])

@@ -4,17 +4,17 @@ OS: Linux, Mac OS
 Python: 2.7+, 3.0+
 Requirements: None
 Version: 0.1.1
-Author: Violet Red `https://violent.red`
+Author: Violet Red `https://violent.red`_
 GPG:
 
 Description:
 
-    Currently this tool can generate random IP (fake proxy) headers and set up
-    random "Referer" and "User-Agent" as well.
+    Originally it was intended to be used with
+    HTTP Header Mangler `https://github.com/disptr/httpheadermangler`_
+    Firefox Plugin by Peter Nilsson.
 
-    Currently "User-Agent" contains about 100 popular browser headers. If you'd
-    like to extend it, you may contact me, because I have a larger data set as
-    well.
+    This simple tool can generate random IP (fake proxy) headers and set up
+    random "Referer" and "User-Agent" as well.
 
 Usage (terminal):
 
@@ -29,19 +29,19 @@ Usage (terminal):
 
     To save this into a file:
 
-        header > yourfile.txt
+        header > headers.txt
 
-    Generate IP within range:
+    Generate IP within a range:
 
         header ip_0=1.1.1.1 ip_1=5.5.5.5
 
-    Set some headers (or override random ones):
+    Override or set headers (quotes will be escaped):
 
-        header Referer=http://your.site
+        header Referer="http://your.site"
 
-    Generate headers for multiple hosts:
+    Generate headers for multiple hosts (no spaces between commas, please):
 
-        header hosts=.*,abc.d
+        header hosts=".*,abc.d"
 
     Result example:
 
