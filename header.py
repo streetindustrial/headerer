@@ -26,9 +26,9 @@ DESCRIPTION
 
     Available arguments:
 
-    hosts - list of hosts or host patterns ( default = ".*," )
-    ip_0  - start IP address within range ( default = "0.0.0.0" )
-    ip_1  - end IP address within range ( default = "255.255.255.255" )
+    hosts   list of hosts or host patterns ( default = ".*," )
+    ip_0    start IP address within range ( default = "0.0.0.0" )
+    ip_1    end IP address within range ( default = "255.255.255.255" )
 
 EXAMPLES
 
@@ -62,8 +62,10 @@ try:    # python 2.7 compatibility
 except ImportError:
     from subprocess import Popen as run
 
-__all__ = ['HeaderGen']
+__all__ = ['HeaderGen', 'browsers', 'sites']
+
 __version__ = '0.1.1'
+__author__ = 'Violet Red'
 
 
 class HeaderGen:
@@ -135,8 +137,6 @@ class HeaderGen:
 
             yield host, generated
 
-
-# List of most popular "User-Agent" headers (2017):
 
 browsers = (
     'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36',
@@ -289,9 +289,7 @@ browsers = (
     'Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101 Thunderbird/45.3.0',
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/601.5.17 (KHTML, like Gecko)',
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/601.4.4 (KHTML, like Gecko)',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko)')
-
-# List of google mirrors used for "Referer" header:
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko)')  #: "User-Agent" headers set
 
 sites = (
     'https://www.google.com.ph', 'https://www.google.cv', 'https://www.google.tg',
@@ -356,7 +354,7 @@ sites = (
     'https://www.google.co.ao', 'https://www.google.bj', 'https://www.google.com.my',
     'https://www.google.la', 'https://www.google.co.mz', 'https://www.google.ws',
     'https://www.google.bs', 'https://www.google.cd', 'https://www.google.com.bo',
-    'https://www.google.ne', 'https://www.google.com.au', 'https://www.google.co.uz')
+    'https://www.google.ne', 'https://www.google.com.au', 'https://www.google.co.uz')  #: "Referer" headers set
 
 if __name__ == '__main__':
     import sys
